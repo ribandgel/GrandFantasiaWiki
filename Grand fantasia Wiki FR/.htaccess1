@@ -1,0 +1,4 @@
+Options All -indexes
+RewriteCond %{HTTP_HOST} ^\.grandfantasiawiki\.fr$ [NC,OR]
+RewriteCond %{SERVER_PORT} !^443$
+RewriteRule ^(.*)$ https://grandfantasiawiki.fr/$1 [R=301,L]
