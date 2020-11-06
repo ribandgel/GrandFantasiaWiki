@@ -8,3 +8,6 @@ dashboard:
 app_logout:
   path: /logout
   methods: GET
+app_register_one_admin:
+  path: /register/admin
+  controller: App\Controller\SecurityController::registerOneAdmin

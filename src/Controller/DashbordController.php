@@ -22,7 +22,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class DashbordController extends AbstractDashboardController
 {
     /**
-     * @Route("/admin")
+     * @Route("/admin", name="admin_interface")
      */
     public function index(): Response
     {
