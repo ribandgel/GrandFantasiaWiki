@@ -30,7 +30,7 @@ class Monster
     private $level;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Location::class)
+     * @ORM\ManyToMany(targetEntity=Location::class, cascade={"persist", "remove"})
      */
     private $locations;
 
@@ -38,6 +38,11 @@ class Monster
      * @ORM\ManyToMany(targetEntity=Item::class, mappedBy="monsters")
      */
     private $items;
+
+    /**
+     * @ORM\Column(type="dateinterval", nullable=true)
+     */
+    private $respawnTime;
 
     public function __construct()
     {
@@ -124,6 +129,22 @@ class Monster
             $this->items->removeElement($item);
             $item->removeMonster($this);
         }
+
+        return $this;
+    }
+
+    public function __toString(){
+        return $this->name;
+    }
+
+    public function getRespawnTime(): ?\DateInterval
+    {
+        return $this->respawnTime;
+    }
+
+    public function setRespawnTime(?\DateInterval $respawnTime): self
+    {
+        $this->respawnTime = $respawnTime;
 
         return $this;
     }

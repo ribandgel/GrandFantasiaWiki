@@ -99,6 +99,11 @@ class Item
      */
     private $craftingTargets;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=TalentCombination::class, mappedBy="talents")
+     */
+    private $talentCombinations;
+
     public function __construct()
     {
         $this->suitableClasses = new ArrayCollection();
@@ -108,6 +113,7 @@ class Item
         $this->quests = new ArrayCollection();
         $this->ingredients = new ArrayCollection();
         $this->craftingTargets = new ArrayCollection();
+        $this->talentCombinations = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -194,6 +200,9 @@ class Item
 
     public function setLevel(?int $level): self
     {
+        if($level >= 100 ){
+            $level = 100;
+        }
         $this->level = $level;
 
         return $this;
@@ -402,6 +411,38 @@ class Item
         if ($this->craftingTargets->contains($craftingTarget)) {
             $this->craftingTargets->removeElement($craftingTarget);
             $craftingTarget->removeIngredient($this);
+        }
+
+        return $this;
+    }
+
+    public function __toString(){
+        return $this->name;
+    }
+
+    /**
+     * @return Collection|TalentCombination[]
+     */
+    public function getTalentCombinations(): Collection
+    {
+        return $this->talentCombinations;
+    }
+
+    public function addTalentCombination(TalentCombination $talentCombination): self
+    {
+        if (!$this->talentCombinations->contains($talentCombination)) {
+            $this->talentCombinations[] = $talentCombination;
+            $talentCombination->addTalent($this);
+        }
+
+        return $this;
+    }
+
+    public function removeTalentCombination(TalentCombination $talentCombination): self
+    {
+        if ($this->talentCombinations->contains($talentCombination)) {
+            $this->talentCombinations->removeElement($talentCombination);
+            $talentCombination->removeTalent($this);
         }
 
         return $this;

@@ -25,7 +25,7 @@ class Stats
     private $effects;
 
     /**
-     * @ORM\OneToMany(targetEntity=StatsLine::class, mappedBy="stats", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity=StatsLine::class, mappedBy="stats", orphanRemoval=true, cascade={"persist", "remove"})
      */
     private $statsLines;
 
@@ -40,6 +40,7 @@ class Stats
     private $spriteDescription;
 
     /**
+     * @ORM\JoinColumn(nullable=false)
      * @ORM\OneToOne(targetEntity=Item::class, mappedBy="stats", cascade={"persist", "remove"})
      */
     private $item;
@@ -137,5 +138,9 @@ class Stats
         }
 
         return $this;
+    }
+
+    public function __toString(){
+        return (String) $this->id;
     }
 }

@@ -33,11 +33,6 @@ class Location
     private $y;
 
     /**
-     * @ORM\Column(type="dateinterval", nullable=true)
-     */
-    private $respawnTime;
-
-    /**
      * @ORM\ManyToOne(targetEntity=PNJ::class, inversedBy="locations")
      */
     private $pNJ;
@@ -83,18 +78,6 @@ class Location
         return $this;
     }
 
-    public function getRespawnTime(): ?\DateInterval
-    {
-        return $this->respawnTime;
-    }
-
-    public function setRespawnTime(?\DateInterval $respawnTime): self
-    {
-        $this->respawnTime = $respawnTime;
-
-        return $this;
-    }
-
     public function getPNJ(): ?PNJ
     {
         return $this->pNJ;
@@ -105,5 +88,9 @@ class Location
         $this->pNJ = $pNJ;
 
         return $this;
+    }
+
+    public function __toString(){
+        return $this->mapName . ' X:' . $this->x . ' Y:' . $this->y;
     }
 }
