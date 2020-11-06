@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\TalentCombinationRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -26,6 +28,16 @@ class TalentCombination
      * @ORM\Column(type="text", nullable=true)
      */
     private $description;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Item::class, inversedBy="talentCombinations")
+     */
+    private $talents;
+
+    public function __construct()
+    {
+        $this->talents = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -59,5 +71,31 @@ class TalentCombination
     public function __toString()
     {
         return $this->name;
+    }
+
+    /**
+     * @return Collection|Item[]
+     */
+    public function getTalents(): Collection
+    {
+        return $this->talents;
+    }
+
+    public function addTalent(Item $talent): self
+    {
+        if (!$this->talents->contains($talent)) {
+            $this->talents[] = $talent;
+        }
+
+        return $this;
+    }
+
+    public function removeTalent(Item $talent): self
+    {
+        if ($this->talents->contains($talent)) {
+            $this->talents->removeElement($talent);
+        }
+
+        return $this;
     }
 }

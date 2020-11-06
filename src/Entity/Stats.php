@@ -40,6 +40,7 @@ class Stats
     private $spriteDescription;
 
     /**
+     * @ORM\JoinColumn(nullable=false)
      * @ORM\OneToOne(targetEntity=Item::class, mappedBy="stats", cascade={"persist", "remove"})
      */
     private $item;

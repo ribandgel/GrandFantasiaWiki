@@ -33,11 +33,6 @@ class Location
     private $y;
 
     /**
-     * @ORM\Column(type="dateinterval", nullable=true)
-     */
-    private $respawnTime;
-
-    /**
      * @ORM\ManyToOne(targetEntity=PNJ::class, inversedBy="locations")
      */
     private $pNJ;
@@ -79,18 +74,6 @@ class Location
     public function setY(float $y): self
     {
         $this->y = $y;
-
-        return $this;
-    }
-
-    public function getRespawnTime(): ?\DateInterval
-    {
-        return $this->respawnTime;
-    }
-
-    public function setRespawnTime(?\DateInterval $respawnTime): self
-    {
-        $this->respawnTime = $respawnTime;
 
         return $this;
     }

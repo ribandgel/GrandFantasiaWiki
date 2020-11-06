@@ -25,7 +25,7 @@ class PNJ
     private $name;
 
     /**
-     * @ORM\OneToMany(targetEntity=Location::class, mappedBy="pNJ")
+     * @ORM\OneToMany(targetEntity=Location::class, mappedBy="pNJ", cascade={"persist", "remove"})
      */
     private $locations;
 
