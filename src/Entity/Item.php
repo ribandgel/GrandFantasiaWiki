@@ -194,6 +194,9 @@ class Item
 
     public function setLevel(?int $level): self
     {
+        if($level >= 100 ){
+            $level = 100;
+        }
         $this->level = $level;
 
         return $this;
@@ -405,5 +408,9 @@ class Item
         }
 
         return $this;
+    }
+
+    public function __toString(){
+        return $this->name;
     }
 }

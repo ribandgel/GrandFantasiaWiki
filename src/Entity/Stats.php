@@ -25,7 +25,7 @@ class Stats
     private $effects;
 
     /**
-     * @ORM\OneToMany(targetEntity=StatsLine::class, mappedBy="stats", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity=StatsLine::class, mappedBy="stats", orphanRemoval=true, cascade={"persist", "remove"})
      */
     private $statsLines;
 
@@ -137,5 +137,9 @@ class Stats
         }
 
         return $this;
+    }
+
+    public function __toString(){
+        return $this->id;
     }
 }

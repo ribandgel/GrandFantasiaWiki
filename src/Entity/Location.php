@@ -106,4 +106,8 @@ class Location
 
         return $this;
     }
+
+    public function __toString(){
+        return $this->mapName . ' X:' . $this->x . ' Y:' . $this->y;
+    }
 }
