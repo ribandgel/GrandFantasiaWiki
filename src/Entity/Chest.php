@@ -30,7 +30,7 @@ class Chest
     private $description;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Item::class, mappedBy="chest")
+     * @ORM\ManyToMany(targetEntity=Item::class, mappedBy="chests")
      */
     private $items;
 

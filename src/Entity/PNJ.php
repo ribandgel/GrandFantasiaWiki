@@ -30,14 +30,26 @@ class PNJ
     private $locations;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Item::class, mappedBy="pnj")
+     * @ORM\ManyToMany(targetEntity=Item::class, mappedBy="pnjs")
      */
     private $items;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Quest::class, mappedBy="acceptPnj", orphanRemoval=true)
+     */
+    private $acceptQuests;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Quest::class, mappedBy="finishPnj", orphanRemoval=true)
+     */
+    private $finishQuests;
 
     public function __construct()
     {
         $this->locations = new ArrayCollection();
         $this->items = new ArrayCollection();
+        $this->acceptQuests = new ArrayCollection();
+        $this->finishQuests = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -115,6 +127,69 @@ class PNJ
 
         return $this;
     }
+
+    /**
+     * @return Collection|Quest[]
+     */
+    public function getAcceptQuests(): Collection
+    {
+        return $this->acceptQuests;
+    }
+
+    public function addAcceptQuest(Quest $acceptQuest): self
+    {
+        if (!$this->acceptQuests->contains($acceptQuest)) {
+            $this->acceptQuests[] = $acceptQuest;
+            $acceptQuest->setAcceptPnj($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAcceptQuest(Quest $acceptQuest): self
+    {
+        if ($this->acceptQuests->contains($acceptQuest)) {
+            $this->acceptQuests->removeElement($acceptQuest);
+            // set the owning side to null (unless already changed)
+            if ($acceptQuest->getAcceptPnj() === $this) {
+                $acceptQuest->setAcceptPnj(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Quest[]
+     */
+    public function getFinishQuests(): Collection
+    {
+        return $this->finishQuests;
+    }
+
+    public function addFinishQuest(Quest $finishQuest): self
+    {
+        if (!$this->finishQuests->contains($finishQuest)) {
+            $this->finishQuests[] = $finishQuest;
+            $finishQuest->setFinishPnj($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFinishQuest(Quest $finishQuest): self
+    {
+        if ($this->finishQuests->contains($finishQuest)) {
+            $this->finishQuests->removeElement($finishQuest);
+            // set the owning side to null (unless already changed)
+            if ($finishQuest->getFinishPnj() === $this) {
+                $finishQuest->setFinishPnj(null);
+            }
+        }
+
+        return $this;
+    }
+
     public function __toString(){
         return $this->name;
     }

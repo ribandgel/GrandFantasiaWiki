@@ -49,15 +49,6 @@ class Quest
      */
     private $requierementLevel;
 
-    /**
-     * @ORM\OneToOne(targetEntity=QuestDescription::class, inversedBy="quest", cascade={"persist", "remove"})
-     */
-    private $accept;
-
-    /**
-     * @ORM\OneToOne(targetEntity=QuestDescription::class, inversedBy="quest", cascade={"persist", "remove"})
-     */
-    private $finish;
 
     /**
      * @ORM\ManyToMany(targetEntity=Quest::class, inversedBy="previousQuests")
@@ -73,6 +64,28 @@ class Quest
      * @ORM\ManyToMany(targetEntity=Item::class, mappedBy="quests")
      */
     private $items;
+
+    /**
+     * @ORM\Column(type="text")
+     */
+    private $acceptDescription;
+
+    /**
+     * @ORM\Column(type="text")
+     */
+    private $finishDescription;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=PNJ::class, inversedBy="acceptQuests")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $acceptPnj;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=PNJ::class, inversedBy="finishQuests")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $finishPnj;
 
     public function __construct()
     {
@@ -158,29 +171,6 @@ class Quest
         return $this;
     }
 
-    public function getAccept(): ?QuestDescription
-    {
-        return $this->accept;
-    }
-
-    public function setAccept(?QuestDescription $accept): self
-    {
-        $this->accept = $accept;
-
-        return $this;
-    }
-
-    public function getFinish(): ?QuestDescription
-    {
-        return $this->finish;
-    }
-
-    public function setFinish(?QuestDescription $finish): self
-    {
-        $this->finish = $finish;
-
-        return $this;
-    }
 
     /**
      * @return Collection|self[]
@@ -263,6 +253,55 @@ class Quest
 
         return $this;
     }
+
+    public function getAcceptDescription(): ?string
+    {
+        return $this->acceptDescription;
+    }
+
+    public function setAcceptDescription(string $acceptDescription): self
+    {
+        $this->acceptDescription = $acceptDescription;
+
+        return $this;
+    }
+
+    public function getFinishDescription(): ?string
+    {
+        return $this->finishDescription;
+    }
+
+    public function setFinishDescription(string $finishDescription): self
+    {
+        $this->finishDescription = $finishDescription;
+
+        return $this;
+    }
+
+    public function getAcceptPnj(): ?PNJ
+    {
+        return $this->acceptPnj;
+    }
+
+    public function setAcceptPnj(?PNJ $acceptPnj): self
+    {
+        $this->acceptPnj = $acceptPnj;
+
+        return $this;
+    }
+
+    public function getFinishPnj(): ?PNJ
+    {
+        return $this->finishPnj;
+    }
+
+    public function setFinishPnj(?PNJ $finishPnj): self
+    {
+        $this->finishPnj = $finishPnj;
+
+        return $this;
+    }
+
     public function __toString(){
         return $this->name;
     }

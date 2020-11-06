@@ -140,6 +140,6 @@ class Stats
     }
 
     public function __toString(){
-        return $this->id;
+        return (String) $this->id;
     }
 }
